@@ -3,6 +3,8 @@ package com.pragma.route.backend.person.application.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +26,8 @@ public class PersonDTO implements Serializable {
 	private String email;
 	private int cityId;
 	private String cityName;
-	private String imageId;
+	private String imageId;	
+	@NotBlank
 	private int profileId;
 	private String profileName;
 	private Date createDate;
