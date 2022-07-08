@@ -12,9 +12,10 @@
 	<artifactId>person-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>person-api</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Aplicacion para administrar personas</description>
 	<properties>
 		<java.version>18</java.version>
+		<spring-cloud.version>2021.0.3</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -27,27 +28,40 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- dependencia para el conector mysql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<!-- dependencia de lombok para autogenerar metodos getter, setter, etc -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>		
+		
+		<!-- dependencia para crear los mapper -->
 		<dependency>
 		    <groupId>org.mapstruct</groupId>
 		    <artifactId>mapstruct</artifactId>
 		    <version>1.5.1.Final</version>
 		</dependency>
 		
+		<!-- dependencia para el poder manejar archivos con multipart -->		
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.11.0</version>
+		</dependency>
+		
+		<!-- dependencias para documentar con swagger -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 	    	<artifactId>springdoc-openapi-ui</artifactId>
@@ -58,7 +72,24 @@
 		    <artifactId>springdoc-openapi-ui</artifactId>
 		    <version>1.6.4</version>
 		</dependency>
+		
+		<!-- dependencia para integrar microservicio externo con feign -->
+		<dependency>
+	      <groupId>org.springframework.cloud</groupId>
+	      <artifactId>spring-cloud-starter-openfeign</artifactId>
+	    </dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>

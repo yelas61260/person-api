@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.pragma.route.backend.person.PersonDataTests;
+import com.pragma.route.backend.person.PersonDtoDataTests;
 import com.pragma.route.backend.person.application.mapper.PersonWithDtoMapper;
 
 @SpringBootTest
@@ -23,37 +24,37 @@ public class PersonWithDtoMapperImplTests {
 
 	@Test
 	public void toDto() {
-		assertThat(personWithDtoMapper.toDto(PersonDataTests.personOkToCreate)).isEqualTo(PersonDataTests.personDtoOkToCreate);
-		assertThat(personWithDtoMapper.toDto(PersonDataTests.personOkDontHaveCity)).isEqualTo(PersonDataTests.personDtoOkDontHaveCity);
-		assertThat(personWithDtoMapper.toDto(PersonDataTests.personErrorEmailFormat)).isEqualTo(PersonDataTests.personDtoErrorEmailFormat);
-		assertThat(personWithDtoMapper.toDto(PersonDataTests.personErrorNotEmail)).isEqualTo(PersonDataTests.personDtoErrorNotEmail);
-		assertThat(personWithDtoMapper.toDto(PersonDataTests.personErrorNotProfile)).isEqualTo(PersonDataTests.personDtoErrorNotProfile);
+		assertThat(personWithDtoMapper.toDto(PersonDataTests.personOkToCreate)).isEqualTo(PersonDtoDataTests.personOkToCreate);
+		assertThat(personWithDtoMapper.toDto(PersonDataTests.personOkDontHaveCity)).isEqualTo(PersonDtoDataTests.personOkDontHaveCity);
+		assertThat(personWithDtoMapper.toDto(PersonDataTests.personErrorEmailFormat)).isEqualTo(PersonDtoDataTests.personErrorEmailFormat);
+		assertThat(personWithDtoMapper.toDto(PersonDataTests.personErrorNotEmail)).isEqualTo(PersonDtoDataTests.personErrorNotEmail);
+		assertThat(personWithDtoMapper.toDto(PersonDataTests.personErrorNotProfile)).isEqualTo(PersonDtoDataTests.personErrorNotProfile);
 	}
 
 	@Test
 	public void toEntity() {
-		assertThat(personWithDtoMapper.toEntity(PersonDataTests.personDtoOkToCreate)).isEqualTo(PersonDataTests.personOkToCreate);
-		assertThat(personWithDtoMapper.toEntity(PersonDataTests.personDtoOkDontHaveCity)).isEqualTo(PersonDataTests.personOkDontHaveCity);
-		assertThat(personWithDtoMapper.toEntity(PersonDataTests.personDtoErrorEmailFormat)).isEqualTo(PersonDataTests.personErrorEmailFormat);
-		assertThat(personWithDtoMapper.toEntity(PersonDataTests.personDtoErrorNotEmail)).isEqualTo(PersonDataTests.personErrorNotEmail);
-		assertThat(personWithDtoMapper.toEntity(PersonDataTests.personDtoErrorNotProfile)).isEqualTo(PersonDataTests.personErrorNotProfile);
+		assertThat(personWithDtoMapper.toEntity(PersonDtoDataTests.personOkToCreate)).isEqualTo(PersonDataTests.personOkToCreate);
+		assertThat(personWithDtoMapper.toEntity(PersonDtoDataTests.personOkDontHaveCity)).isEqualTo(PersonDataTests.personOkDontHaveCity);
+		assertThat(personWithDtoMapper.toEntity(PersonDtoDataTests.personErrorEmailFormat)).isEqualTo(PersonDataTests.personErrorEmailFormat);
+		assertThat(personWithDtoMapper.toEntity(PersonDtoDataTests.personErrorNotEmail)).isEqualTo(PersonDataTests.personErrorNotEmail);
+		assertThat(personWithDtoMapper.toEntity(PersonDtoDataTests.personErrorNotProfile)).isEqualTo(PersonDataTests.personErrorNotProfile);
 	}
 	
 	@Test
 	public void toDtoList() {
-		assertThat(personWithDtoMapper.toDtoList(PersonDataTests.personListOk)).isEqualTo(PersonDataTests.personDtoListOk);
-		assertThat(personWithDtoMapper.toDtoList(PersonDataTests.personListEmailFormat)).isEqualTo(PersonDataTests.personDtoListEmailFormat);
-		assertThat(personWithDtoMapper.toDtoList(PersonDataTests.personListErrorNotEmail)).isEqualTo(PersonDataTests.personDtoListErrorNotEmail);
-		assertThat(personWithDtoMapper.toDtoList(PersonDataTests.personListErrorNotProfile)).isEqualTo(PersonDataTests.personDtoListErrorNotProfile);
+		assertThat(personWithDtoMapper.toDtoList(PersonDataTests.personListOk)).isEqualTo(PersonDtoDataTests.personListOk);
+		assertThat(personWithDtoMapper.toDtoList(PersonDataTests.personListEmailFormat)).isEqualTo(PersonDtoDataTests.personListEmailFormat);
+		assertThat(personWithDtoMapper.toDtoList(PersonDataTests.personListErrorNotEmail)).isEqualTo(PersonDtoDataTests.personListErrorNotEmail);
+		assertThat(personWithDtoMapper.toDtoList(PersonDataTests.personListErrorNotProfile)).isEqualTo(PersonDtoDataTests.personListErrorNotProfile);
 		assertThat(personWithDtoMapper.toDtoList(null)).isEqualTo(new ArrayList<>());
 	}
 
 	@Test
 	public void toEntityList() {
-		assertThat(personWithDtoMapper.toEntityList(PersonDataTests.personDtoListOk)).isEqualTo(PersonDataTests.personListOk);
-		assertThat(personWithDtoMapper.toEntityList(PersonDataTests.personDtoListEmailFormat)).isEqualTo(PersonDataTests.personListEmailFormat);
-		assertThat(personWithDtoMapper.toEntityList(PersonDataTests.personDtoListErrorNotEmail)).isEqualTo(PersonDataTests.personListErrorNotEmail);
-		assertThat(personWithDtoMapper.toEntityList(PersonDataTests.personDtoListErrorNotProfile)).isEqualTo(PersonDataTests.personListErrorNotProfile);
+		assertThat(personWithDtoMapper.toEntityList(PersonDtoDataTests.personListOk)).isEqualTo(PersonDataTests.personListOk);
+		assertThat(personWithDtoMapper.toEntityList(PersonDtoDataTests.personListEmailFormat)).isEqualTo(PersonDataTests.personListEmailFormat);
+		assertThat(personWithDtoMapper.toEntityList(PersonDtoDataTests.personListErrorNotEmail)).isEqualTo(PersonDataTests.personListErrorNotEmail);
+		assertThat(personWithDtoMapper.toEntityList(PersonDtoDataTests.personListErrorNotProfile)).isEqualTo(PersonDataTests.personListErrorNotProfile);
 		assertThat(personWithDtoMapper.toEntityList(null)).isEqualTo(new ArrayList<>());
 	}
 

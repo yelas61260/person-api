@@ -2,15 +2,15 @@ package com.pragma.route.backend.person.application.service;
 
 import java.util.List;
 
-import com.pragma.route.backend.person.application.dto.PersonDTO;
+import com.pragma.route.backend.person.application.dto.PersonDto;
 
 public interface PersonService {
 	
-	public List<PersonDTO> processPersonListToRead(List<PersonDTO> persons);
-	public List<PersonDTO> processPersonListToWrite(List<PersonDTO> persons);
-	public PersonDTO processPerson(PersonDTO person);
+	public List<PersonDto> processPersonListToRead(List<PersonDto> persons);
+	public List<PersonDto> processPersonListToWrite(List<PersonDto> persons);
+	public PersonDto processPerson(PersonDto person);
 	
-	public PersonDTO prepareToCreate(PersonDTO person);
-	public PersonDTO prepareToUpdate(PersonDTO person);
+	public PersonDto prepareToCreate(PersonDto person);
+	public PersonDto prepareToUpdate(PersonDto person);
 
 }

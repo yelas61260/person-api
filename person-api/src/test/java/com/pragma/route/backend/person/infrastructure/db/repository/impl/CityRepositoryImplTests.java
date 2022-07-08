@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.pragma.route.backend.person.PersonDataTests;
+import com.pragma.route.backend.person.PersonEntityDataTests;
 import com.pragma.route.backend.person.infrastructure.db.dao.CityDao;
 import com.pragma.route.backend.person.infrastructure.db.repository.CityRepository;
 
@@ -27,7 +27,7 @@ public class CityRepositoryImplTests {
 		cityRepository = new CityRepositoryImpl(cityDao);
 		
 		Mockito.when(cityDao.findById(0)).thenReturn(Optional.empty());
- 		Mockito.when(cityDao.findById(1)).thenReturn(Optional.of(PersonDataTests.cityEntityOk));
+ 		Mockito.when(cityDao.findById(1)).thenReturn(Optional.of(PersonEntityDataTests.cityOk));
 	}
 	
 	@Test

@@ -29,20 +29,23 @@ public class PersonDomainServiceImpl implements PersonDomainService {
 
 	@Override
 	public Person processPerson(Person person) {
-		personValidatorDomainService.validateEntityFormat(person);
-		return person;
+		Person personResponse = person.clone();
+		personValidatorDomainService.validateEntityFormat(personResponse);
+		return personResponse;
 	}
 
 	@Override
 	public Person prepareToCreate(Person person) {
-		writeValidation(person);
-		return person;
+		Person personResponse = person.clone();
+		writeValidation(personResponse);
+		return personResponse;
 	}
 
 	@Override
 	public Person prepareToUpdate(Person person) {
-		writeValidation(person);
-		return person;
+		Person personResponse = person.clone();
+		writeValidation(personResponse);
+		return personResponse;
 	}
 	
 	private void writeValidation(Person person) {

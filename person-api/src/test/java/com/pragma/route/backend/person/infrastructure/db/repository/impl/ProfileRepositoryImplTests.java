@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.pragma.route.backend.person.PersonDataTests;
+import com.pragma.route.backend.person.PersonEntityDataTests;
 import com.pragma.route.backend.person.infrastructure.db.dao.ProfileDao;
 import com.pragma.route.backend.person.infrastructure.db.repository.ProfileRepository;
 
@@ -27,7 +27,7 @@ public class ProfileRepositoryImplTests {
 		profileRepository = new ProfileRepositoryImpl(profileDao);
 
 		Mockito.when(profileDao.findById(0)).thenReturn(Optional.empty());
- 		Mockito.when(profileDao.findById(1)).thenReturn(Optional.of(PersonDataTests.profileEntityOk));
+ 		Mockito.when(profileDao.findById(1)).thenReturn(Optional.of(PersonEntityDataTests.profileOk));
 	}
 	
 	@Test

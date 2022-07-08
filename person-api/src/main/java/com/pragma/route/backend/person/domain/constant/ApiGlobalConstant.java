@@ -8,5 +8,6 @@ public class ApiGlobalConstant {
 	public static final int PROFILE_NULL_ID = 0;
 	public static final String PROFILE_NULL_TEXT = "N/A";
 	public static final int ID_TO_CREATE_PERSON = 0;
+	public static final int TYPE_RESOURCE_PERSON_BY_IMAGE = 1;
 
 }

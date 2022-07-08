@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.pragma.route.backend.person.application.dto.PersonDTO;
+import com.pragma.route.backend.person.application.dto.PersonDto;
+import com.pragma.route.backend.person.application.dto.PersonWithImageDto;
 import com.pragma.route.backend.person.infrastructure.response.ResponseDTO;
 import com.pragma.route.backend.person.infrastructure.service.PersonApiService;
 
@@ -44,8 +47,8 @@ public class PersonController {
     				@Content(mediaType = "application/json" , schema = @Schema(implementation = ResponseDTO.class))
     		})
 	@PostMapping("/")
-	public ResponseEntity<PersonDTO> create(@RequestBody PersonDTO person) {
-		return new ResponseEntity<PersonDTO>(personApiService.create(person), HttpStatus.OK);
+	public ResponseEntity<PersonWithImageDto> create(@RequestBody PersonDto person, @RequestParam(value = "image", required = false) MultipartFile imageFile) {
+		return new ResponseEntity<PersonWithImageDto>((PersonWithImageDto) personApiService.create(person, imageFile), HttpStatus.OK);
 	}
 
 	@Operation(summary = "Actualizar una persona")
@@ -63,8 +66,8 @@ public class PersonController {
     				@Content(mediaType = "application/json" , schema = @Schema(implementation = ResponseDTO.class))
     		})
 	@PutMapping("/")
-	public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO person) {
-		return new ResponseEntity<PersonDTO>(personApiService.update(person), HttpStatus.OK);
+	public ResponseEntity<PersonWithImageDto> update(@RequestBody PersonDto person, @RequestParam(value = "image", required = false) MultipartFile imageFile) {
+		return new ResponseEntity<PersonWithImageDto>((PersonWithImageDto) personApiService.update(person, imageFile), HttpStatus.OK);
 	}
 	
 	@Operation(summary = "Consultar todas las personas")
@@ -78,8 +81,8 @@ public class PersonController {
     				@Content(mediaType = "application/json" , schema = @Schema(implementation = ResponseDTO.class))
     		})
     @GetMapping("/all")
-    public ResponseEntity<List<PersonDTO>> getAllPerson() {
-        return new ResponseEntity<List<PersonDTO>>(personApiService.getAllPerson(), HttpStatus.OK);
+    public ResponseEntity<List<PersonDto>> getAllPerson() {
+        return new ResponseEntity<List<PersonDto>>(personApiService.getAllPerson(), HttpStatus.OK);
     }
 
 	@Operation(summary = "Consultar una persona por id")
@@ -93,8 +96,8 @@ public class PersonController {
     				@Content(mediaType = "application/json" , schema = @Schema(implementation = ResponseDTO.class))
     		})
     @GetMapping("/{personId}")
-    public ResponseEntity<PersonDTO> getPersonById(@PathVariable("personId") int personId){
-        return new ResponseEntity<PersonDTO>(personApiService.getPersonById(personId), HttpStatus.OK);
+    public ResponseEntity<PersonWithImageDto> getPersonById(@PathVariable("personId") int personId){
+        return new ResponseEntity<PersonWithImageDto>((PersonWithImageDto) personApiService.getPersonById(personId), HttpStatus.OK);
     }
     
 }

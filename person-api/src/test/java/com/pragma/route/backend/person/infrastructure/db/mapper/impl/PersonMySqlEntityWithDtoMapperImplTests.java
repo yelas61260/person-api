@@ -8,9 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.pragma.route.backend.person.PersonDataTests;
+import com.pragma.route.backend.person.PersonDtoDataTests;
+import com.pragma.route.backend.person.PersonEntityDataTests;
 import com.pragma.route.backend.person.infrastructure.db.mapper.PersonMySqlEntityWithDtoMapper;
-
 
 @SpringBootTest
 public class PersonMySqlEntityWithDtoMapperImplTests {
@@ -24,20 +24,20 @@ public class PersonMySqlEntityWithDtoMapperImplTests {
 
 	@Test
 	public void toDto() {
-		assertThat(personMySqlEntityWithDtoMapper.toDto(PersonDataTests.personEntityOkToCreate)).isEqualTo(PersonDataTests.personDtoOkToCreate);
-		assertThat(personMySqlEntityWithDtoMapper.toDto(PersonDataTests.personEntityOkDontHaveCity)).isEqualTo(PersonDataTests.personDtoOkDontHaveCity);
-		assertThat(personMySqlEntityWithDtoMapper.toDto(PersonDataTests.personEntityOkDontHaveProfile)).isEqualTo(PersonDataTests.personDtoOkDontHaveProfile);
+		assertThat(personMySqlEntityWithDtoMapper.toDto(PersonEntityDataTests.personOkToCreate)).isEqualTo(PersonDtoDataTests.personOkToCreate);
+		assertThat(personMySqlEntityWithDtoMapper.toDto(PersonEntityDataTests.personOkDontHaveCity)).isEqualTo(PersonDtoDataTests.personOkDontHaveCity);
+		assertThat(personMySqlEntityWithDtoMapper.toDto(PersonEntityDataTests.personOkDontHaveProfile)).isEqualTo(PersonDtoDataTests.personOkDontHaveProfile);
 	}
 
 	@Test
 	public void toMySqlEntity() {
-		assertThat(personMySqlEntityWithDtoMapper.toMySqlEntity(PersonDataTests.personDtoOkToCreate)).isEqualTo(PersonDataTests.personEntityOkToCreate);
-		assertThat(personMySqlEntityWithDtoMapper.toMySqlEntity(PersonDataTests.personDtoOkDontHaveCity)).isEqualTo(PersonDataTests.personEntityOkDontHaveCity);
+		assertThat(personMySqlEntityWithDtoMapper.toMySqlEntity(PersonDtoDataTests.personOkToCreate)).isEqualTo(PersonEntityDataTests.personOkToCreate);
+		assertThat(personMySqlEntityWithDtoMapper.toMySqlEntity(PersonDtoDataTests.personOkDontHaveCity)).isEqualTo(PersonEntityDataTests.personOkDontHaveCity);
 	}
 	
 	@Test
 	public void toDtoList() {
-		assertThat(personMySqlEntityWithDtoMapper.toDtoList(PersonDataTests.personEntityListOk)).isEqualTo(PersonDataTests.personDtoListOk);
+		assertThat(personMySqlEntityWithDtoMapper.toDtoList(PersonEntityDataTests.personListOk)).isEqualTo(PersonDtoDataTests.personListOk);
 		assertThat(personMySqlEntityWithDtoMapper.toDtoList(null)).isEqualTo(new ArrayList<>());
 	}
 

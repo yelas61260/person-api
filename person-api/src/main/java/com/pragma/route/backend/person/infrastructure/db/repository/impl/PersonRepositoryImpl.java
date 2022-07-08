@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.pragma.route.backend.person.application.dto.PersonDTO;
+import com.pragma.route.backend.person.application.dto.PersonDto;
 import com.pragma.route.backend.person.infrastructure.db.dao.PersonDao;
 import com.pragma.route.backend.person.infrastructure.db.entity.PersonMySqlEntity;
 import com.pragma.route.backend.person.infrastructure.db.mapper.PersonMySqlEntityWithDtoMapper;
@@ -21,12 +21,12 @@ public class PersonRepositoryImpl implements PersonRepository {
 	private final PersonMySqlEntityWithDtoMapper personMySqlEntityWithDtoMapper;
 
 	@Override
-	public List<PersonDTO> getAll() {
+	public List<PersonDto> getAll() {
 		return personMySqlEntityWithDtoMapper.toDtoList((List<PersonMySqlEntity>) personDao.findAll());
 	}
 
 	@Override
-	public PersonDTO getById(int personId) {
+	public PersonDto getById(int personId) {
 		Optional<PersonMySqlEntity> personFind = personDao.findById(personId);
 		if (personFind.isEmpty()) {
 			return null;
@@ -36,13 +36,13 @@ public class PersonRepositoryImpl implements PersonRepository {
 	}
 
 	@Override
-	public PersonDTO create(PersonDTO person) {
+	public PersonDto create(PersonDto person) {
 		PersonMySqlEntity personMySqlEntity = personMySqlEntityWithDtoMapper.toMySqlEntity(person);
 		return personMySqlEntityWithDtoMapper.toDto(personDao.save(personMySqlEntity));
 	}
 
 	@Override
-	public PersonDTO update(PersonDTO person) {
+	public PersonDto update(PersonDto person) {
 		PersonMySqlEntity personMySqlEntity = personMySqlEntityWithDtoMapper.toMySqlEntity(person);
 		return personMySqlEntityWithDtoMapper.toDto(personDao.save(personMySqlEntity));
 	}

@@ -2,7 +2,7 @@ package com.pragma.route.backend.person.infrastructure.db.mapper.impl;
 
 import org.springframework.stereotype.Component;
 
-import com.pragma.route.backend.person.application.dto.PersonDTO;
+import com.pragma.route.backend.person.application.dto.PersonDto;
 import com.pragma.route.backend.person.domain.constant.ApiGlobalConstant;
 import com.pragma.route.backend.person.infrastructure.db.entity.CityMySqlEntity;
 import com.pragma.route.backend.person.infrastructure.db.entity.PersonMySqlEntity;
@@ -13,8 +13,8 @@ import com.pragma.route.backend.person.infrastructure.db.mapper.PersonMySqlEntit
 public class PersonMySqlEntityWithDtoMapperImpl implements PersonMySqlEntityWithDtoMapper {
 
 	@Override
-	public PersonDTO toDto(PersonMySqlEntity entity) {
-		return PersonDTO.builder()
+	public PersonDto toDto(PersonMySqlEntity entity) {
+		return PersonDto.builder()
 				.id(entity.getId())
 				.name(entity.getName())
 				.email(entity.getEmail())
@@ -29,7 +29,7 @@ public class PersonMySqlEntityWithDtoMapperImpl implements PersonMySqlEntityWith
 	}
 
 	@Override
-	public PersonMySqlEntity toMySqlEntity(PersonDTO dto) {
+	public PersonMySqlEntity toMySqlEntity(PersonDto dto) {
 		return PersonMySqlEntity.builder()
 				.id(dto.getId())
 				.name(dto.getName())

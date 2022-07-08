@@ -24,4 +24,19 @@ public class Person {
 	private Date createDate;
 	private Date updateDate;
 
+	public Person clone() {
+		return Person.builder()
+				.id(id)
+				.name(name)
+				.email(email)
+				.cityId(cityId)
+				.cityName(cityName)
+				.imageId(imageId)
+				.profileId(profileId)
+				.profileName(profileName)
+				.createDate(createDate)
+				.updateDate(updateDate)
+				.build();
+	}
+
 }

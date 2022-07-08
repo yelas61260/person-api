@@ -6,23 +6,23 @@ import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
 
-import com.pragma.route.backend.person.application.dto.PersonDTO;
+import com.pragma.route.backend.person.application.dto.PersonDto;
 import com.pragma.route.backend.person.domain.model.Person;
 
 @Mapper
 public interface PersonWithDtoMapper {
 	
-	PersonDTO toDto(Person entity);
-	Person toEntity(PersonDTO dto);
+	PersonDto toDto(Person entity);
+	Person toEntity(PersonDto dto);
 	
-	default List<PersonDTO> toDtoList(List<Person> entities) {
+	default List<PersonDto> toDtoList(List<Person> entities) {
 		if (entities == null) {
 			return new ArrayList<>();
 		}
 		return entities.stream().map(this::toDto).collect(Collectors.toList());
 	}
 
-	default List<Person> toEntityList(List<PersonDTO> dtos) {
+	default List<Person> toEntityList(List<PersonDto> dtos) {
 		if (dtos == null) {
 			return new ArrayList<>();
 		}

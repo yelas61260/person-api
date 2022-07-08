@@ -9,7 +9,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.pragma.route.backend.person.PersonDataTests;
+import com.pragma.route.backend.person.ImageDataTests;
+import com.pragma.route.backend.person.ImageFileDataTests;
+import com.pragma.route.backend.person.PersonDtoDataTests;
 import com.pragma.route.backend.person.application.service.PersonService;
 import com.pragma.route.backend.person.domain.exception.conflict.format.EmailFormatException;
 import com.pragma.route.backend.person.domain.exception.conflict.required.EmailRequiredException;
@@ -17,6 +19,7 @@ import com.pragma.route.backend.person.domain.exception.conflict.required.Profil
 import com.pragma.route.backend.person.domain.exception.notfound.CityNotFoundException;
 import com.pragma.route.backend.person.domain.exception.notfound.PersonNotFoundException;
 import com.pragma.route.backend.person.domain.exception.notfound.ProfileNotFoundException;
+import com.pragma.route.backend.person.infrastructure.client.image.service.ImageApiService;
 import com.pragma.route.backend.person.infrastructure.db.repository.CityRepository;
 import com.pragma.route.backend.person.infrastructure.db.repository.PersonRepository;
 import com.pragma.route.backend.person.infrastructure.db.repository.ProfileRepository;
@@ -39,68 +42,85 @@ public class PersonApiServiceImplTests {
 	@Mock
 	private PersonService personService;
 	
+	@Mock
+	private ImageApiService imageApiService;
+	
 	@BeforeEach
 	public void setup() {
-		personApiService = new PersonApiServiceImpl(personRepository, cityRepository, profileRepository, personService);
+		personApiService = new PersonApiServiceImpl(personRepository, cityRepository, profileRepository, personService, imageApiService);
 
-		Mockito.when(personRepository.getAll()).thenReturn(PersonDataTests.personDtoListOk);
+		Mockito.when(personRepository.getAll()).thenReturn(PersonDtoDataTests.personListOk);
 		Mockito.when(personRepository.getById(0)).thenReturn(null);
-		Mockito.when(personRepository.getById(1)).thenReturn(PersonDataTests.personDtoOkCreated);
-		Mockito.when(personRepository.create(PersonDataTests.personDtoOkToCreate)).thenReturn(PersonDataTests.personDtoOkCreated);
-		Mockito.when(personRepository.update(PersonDataTests.personDtoOkCreated)).thenReturn(PersonDataTests.personDtoOkUpdated);
+		Mockito.when(personRepository.getById(1)).thenReturn(PersonDtoDataTests.personOkCreated);
+		Mockito.when(personRepository.create(PersonDtoDataTests.personOkToCreate)).thenReturn(PersonDtoDataTests.personOkCreated);
+		Mockito.when(personRepository.update(PersonDtoDataTests.personOkCreated)).thenReturn(PersonDtoDataTests.personOkUpdated);
 
 		Mockito.when(cityRepository.exist(0)).thenReturn(false);
 		Mockito.when(cityRepository.exist(1)).thenReturn(true);
 		
 		Mockito.when(profileRepository.exist(0)).thenReturn(false);
 		Mockito.when(profileRepository.exist(1)).thenReturn(true);
+		
 
-		Mockito.when(personService.processPersonListToRead(PersonDataTests.personDtoListOk)).thenReturn(PersonDataTests.personDtoListOk);
-		Mockito.doThrow(EmailFormatException.class).when(personService).processPersonListToRead(PersonDataTests.personDtoListEmailFormat);
-		Mockito.when(personService.processPersonListToWrite(PersonDataTests.personDtoListOk)).thenReturn(PersonDataTests.personDtoListOk);
-		Mockito.doThrow(ProfileRequiredException.class).when(personService).processPersonListToWrite(PersonDataTests.personDtoListErrorNotProfile);
-		Mockito.doThrow(EmailRequiredException.class).when(personService).processPersonListToWrite(PersonDataTests.personDtoListErrorNotEmail);
-		Mockito.doThrow(EmailFormatException.class).when(personService).processPersonListToWrite(PersonDataTests.personDtoListEmailFormat);
-		Mockito.when(personService.processPerson(PersonDataTests.personDtoOkToCreate)).thenReturn(PersonDataTests.personDtoOkToCreate);
-		Mockito.when(personService.processPerson(PersonDataTests.personDtoOkCreated)).thenReturn(PersonDataTests.personDtoOkCreated);
-		Mockito.when(personService.processPerson(PersonDataTests.personDtoOkUpdated)).thenReturn(PersonDataTests.personDtoOkUpdated);
-		Mockito.doThrow(EmailFormatException.class).when(personService).processPerson(PersonDataTests.personDtoErrorEmailFormat);
-		Mockito.when(personService.prepareToCreate(PersonDataTests.personDtoOkToCreate)).thenReturn(PersonDataTests.personDtoOkToCreate);
-		Mockito.when(personService.prepareToCreate(PersonDataTests.personDtoOkDontHaveCity)).thenReturn(PersonDataTests.personDtoOkDontHaveCity);
-		Mockito.doThrow(ProfileRequiredException.class).when(personService).prepareToCreate(PersonDataTests.personDtoErrorNotProfile);
-		Mockito.doThrow(EmailRequiredException.class).when(personService).prepareToCreate(PersonDataTests.personDtoErrorNotEmail);
-		Mockito.doThrow(EmailFormatException.class).when(personService).prepareToCreate(PersonDataTests.personDtoErrorEmailFormat);
-		Mockito.when(personService.prepareToUpdate(PersonDataTests.personDtoOkCreated)).thenReturn(PersonDataTests.personDtoOkCreated);
-		Mockito.when(personService.prepareToUpdate(PersonDataTests.personDtoOkDontHaveCity)).thenReturn(PersonDataTests.personDtoOkDontHaveCity);
-		Mockito.doThrow(ProfileRequiredException.class).when(personService).prepareToUpdate(PersonDataTests.personDtoErrorNotProfile);
-		Mockito.doThrow(EmailRequiredException.class).when(personService).prepareToUpdate(PersonDataTests.personDtoErrorNotEmail);
-		Mockito.doThrow(EmailFormatException.class).when(personService).prepareToUpdate(PersonDataTests.personDtoErrorEmailFormat);
+		Mockito.when(personService.processPersonListToRead(PersonDtoDataTests.personListOk)).thenReturn(PersonDtoDataTests.personListOk);
+		Mockito.doThrow(EmailFormatException.class).when(personService).processPersonListToRead(PersonDtoDataTests.personListEmailFormat);
+		Mockito.when(personService.processPersonListToWrite(PersonDtoDataTests.personListOk)).thenReturn(PersonDtoDataTests.personListOk);
+		Mockito.doThrow(ProfileRequiredException.class).when(personService).processPersonListToWrite(PersonDtoDataTests.personListErrorNotProfile);
+		Mockito.doThrow(EmailRequiredException.class).when(personService).processPersonListToWrite(PersonDtoDataTests.personListErrorNotEmail);
+		Mockito.doThrow(EmailFormatException.class).when(personService).processPersonListToWrite(PersonDtoDataTests.personListEmailFormat);
+		
+		Mockito.when(personService.processPerson(PersonDtoDataTests.personOkToCreate)).thenReturn(PersonDtoDataTests.personOkToCreate);
+		Mockito.when(personService.processPerson(PersonDtoDataTests.personOkCreated)).thenReturn(PersonDtoDataTests.personOkCreated);
+		Mockito.when(personService.processPerson(PersonDtoDataTests.personOkUpdated)).thenReturn(PersonDtoDataTests.personOkUpdated);
+		Mockito.doThrow(EmailFormatException.class).when(personService).processPerson(PersonDtoDataTests.personErrorEmailFormat);
+		
+		Mockito.when(personService.prepareToCreate(PersonDtoDataTests.personOkToCreate)).thenReturn(PersonDtoDataTests.personOkToCreate);
+		Mockito.when(personService.prepareToCreate(PersonDtoDataTests.personOkDontHaveCity)).thenReturn(PersonDtoDataTests.personOkDontHaveCity);
+		Mockito.when(personService.prepareToCreate(PersonDtoDataTests.personErrorCityNotFound)).thenReturn(PersonDtoDataTests.personErrorCityNotFound);
+		Mockito.when(personService.prepareToCreate(PersonDtoDataTests.personErrorProfileNotFound)).thenReturn(PersonDtoDataTests.personErrorProfileNotFound);
+		Mockito.doThrow(ProfileRequiredException.class).when(personService).prepareToCreate(PersonDtoDataTests.personErrorNotProfile);
+		Mockito.doThrow(EmailRequiredException.class).when(personService).prepareToCreate(PersonDtoDataTests.personErrorNotEmail);
+		Mockito.doThrow(EmailFormatException.class).when(personService).prepareToCreate(PersonDtoDataTests.personErrorEmailFormat);
+		
+		Mockito.when(personService.prepareToUpdate(PersonDtoDataTests.personOkCreated)).thenReturn(PersonDtoDataTests.personOkCreated);
+		Mockito.when(personService.prepareToUpdate(PersonDtoDataTests.personOkDontHaveCity)).thenReturn(PersonDtoDataTests.personOkDontHaveCity);
+		Mockito.when(personService.prepareToUpdate(PersonDtoDataTests.personErrorCityNotFound)).thenReturn(PersonDtoDataTests.personErrorCityNotFound);
+		Mockito.when(personService.prepareToUpdate(PersonDtoDataTests.personErrorProfileNotFound)).thenReturn(PersonDtoDataTests.personErrorProfileNotFound);
+		Mockito.doThrow(ProfileRequiredException.class).when(personService).prepareToUpdate(PersonDtoDataTests.personErrorNotProfile);
+		Mockito.doThrow(EmailRequiredException.class).when(personService).prepareToUpdate(PersonDtoDataTests.personErrorNotEmail);
+		Mockito.doThrow(EmailFormatException.class).when(personService).prepareToUpdate(PersonDtoDataTests.personErrorEmailFormat);
+		
+		Mockito.when(imageApiService.create(ImageFileDataTests.multipartFileOk)).thenReturn(ImageDataTests.imageOKCreated);
+		Mockito.when(imageApiService.update(ImageDataTests.imageOKCreated.getImageId(), ImageFileDataTests.multipartFileOk)).thenReturn(ImageDataTests.imageOKCreated);
+		Mockito.when(imageApiService.getImageBase64(ImageDataTests.imageOKCreated.getImageId())).thenReturn(ImageDataTests.imageOKCreated.getImageBase64());
 	}
 
 	@Test
 	public void create() {
-		assertThat(personApiService.create(PersonDataTests.personDtoOkToCreate)).isEqualTo(PersonDataTests.personDtoOkCreated);
-		assertThrows(EmailFormatException.class, () -> personApiService.create(PersonDataTests.personDtoErrorEmailFormat));
-		assertThrows(CityNotFoundException.class, () -> personApiService.create(PersonDataTests.personDtoErrorCityNotFound));
-		assertThrows(ProfileNotFoundException.class, () -> personApiService.create(PersonDataTests.personDtoErrorProfileNotFound));
+		assertThat(personApiService.create(PersonDtoDataTests.personOkToCreate, null)).isEqualTo(PersonDtoDataTests.personOkCreated);
+		assertThat(personApiService.create(PersonDtoDataTests.personOkToCreate, ImageFileDataTests.multipartFileOk)).isEqualTo(PersonDtoDataTests.personOkCreated);
+		assertThrows(EmailFormatException.class, () -> personApiService.create(PersonDtoDataTests.personErrorEmailFormat, null));
+		assertThrows(CityNotFoundException.class, () -> personApiService.create(PersonDtoDataTests.personErrorCityNotFound, null));
+		assertThrows(ProfileNotFoundException.class, () -> personApiService.create(PersonDtoDataTests.personErrorProfileNotFound, null));
 	}
 
 	@Test
 	public void update() {
-		assertThat(personApiService.update(PersonDataTests.personDtoOkCreated)).isEqualTo(PersonDataTests.personDtoOkUpdated);
-		assertThrows(EmailFormatException.class, () -> personApiService.update(PersonDataTests.personDtoErrorEmailFormat));
-		assertThrows(CityNotFoundException.class, () -> personApiService.update(PersonDataTests.personDtoErrorCityNotFound));
-		assertThrows(ProfileNotFoundException.class, () -> personApiService.update(PersonDataTests.personDtoErrorProfileNotFound));
+		assertThat(personApiService.update(PersonDtoDataTests.personOkCreated, null)).isEqualTo(PersonDtoDataTests.personOkUpdated);
+		assertThat(personApiService.update(PersonDtoDataTests.personOkCreated, ImageFileDataTests.multipartFileOk)).isEqualTo(PersonDtoDataTests.personOkUpdated);
+		assertThrows(EmailFormatException.class, () -> personApiService.update(PersonDtoDataTests.personErrorEmailFormat, null));
+		assertThrows(CityNotFoundException.class, () -> personApiService.update(PersonDtoDataTests.personErrorCityNotFound, null));
+		assertThrows(ProfileNotFoundException.class, () -> personApiService.update(PersonDtoDataTests.personErrorProfileNotFound, null));
 	}
 
 	@Test
 	public void getAllPerson() {
-		assertThat(personApiService.getAllPerson()).isEqualTo(PersonDataTests.personDtoListOk);
+		assertThat(personApiService.getAllPerson()).isEqualTo(PersonDtoDataTests.personListOk);
 	}
 
 	@Test
 	public void getPersonById() {
-		assertThat(personApiService.getPersonById(1)).isEqualTo(PersonDataTests.personDtoOkCreated);
+		assertThat(personApiService.getPersonById(1)).isEqualTo(PersonDtoDataTests.personOkCreated);
 		assertThrows(PersonNotFoundException.class, () -> personApiService.getPersonById(0));
 	}
 

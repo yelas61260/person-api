@@ -1,14 +1,14 @@
 package com.pragma.route.backend.person.application.mapper.impl;
 
-import com.pragma.route.backend.person.application.dto.PersonDTO;
+import com.pragma.route.backend.person.application.dto.PersonDto;
 import com.pragma.route.backend.person.application.mapper.PersonWithDtoMapper;
 import com.pragma.route.backend.person.domain.model.Person;
 
 public class PersonWithDtoMapperImpl implements PersonWithDtoMapper {
 
 	@Override
-	public PersonDTO toDto(Person entity) {
-		return PersonDTO.builder()
+	public PersonDto toDto(Person entity) {
+		return PersonDto.builder()
 				.id(entity.getId())
 				.name(entity.getName())
 				.email(entity.getEmail())
@@ -23,7 +23,7 @@ public class PersonWithDtoMapperImpl implements PersonWithDtoMapper {
 	}
 
 	@Override
-	public Person toEntity(PersonDTO dto) {
+	public Person toEntity(PersonDto dto) {
 		return Person.builder()
 				.id(dto.getId())
 				.name(dto.getName())

@@ -6,16 +6,16 @@ import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
 
-import com.pragma.route.backend.person.application.dto.PersonDTO;
+import com.pragma.route.backend.person.application.dto.PersonDto;
 import com.pragma.route.backend.person.infrastructure.db.entity.PersonMySqlEntity;
 
 @Mapper
 public interface PersonMySqlEntityWithDtoMapper {
 	
-	PersonDTO toDto(PersonMySqlEntity entity);
-	PersonMySqlEntity toMySqlEntity(PersonDTO dto);
+	PersonDto toDto(PersonMySqlEntity entity);
+	PersonMySqlEntity toMySqlEntity(PersonDto dto);
 	
-	default List<PersonDTO> toDtoList(List<PersonMySqlEntity> entities) {
+	default List<PersonDto> toDtoList(List<PersonMySqlEntity> entities) {
 		if (entities == null) {
 			return new ArrayList<>();
 		}
